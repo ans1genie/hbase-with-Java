@@ -2,7 +2,7 @@
 
 #### create hbase container :
 
-cmd: ` docker run -p 16010:16010 -p 8085:8085 -p 9095:9095  --name=hbase-docker -h hbase-docker -d -v $PWD/data:/data dajobe/hbase`
+cmd: ` docker run -p 2181:2181  -p 60000:60000  -p 60010:60010  -p 60020:60020  -p 60030:60030  -p 8080:8080  -p 8085:8085  -p 9090:9090  -p 9095:9095  --name=hbase-docker -h hbase-docker -d -v $PWD/data:/data dajobe/hbase`
 
 #### check if services are up and running :
 
@@ -40,4 +40,9 @@ http://localhost:8085/rest.jsp
   `put 'commande', 'row2', 'produits:Fileire', 'GLSID'`
 
   `put 'commande', 'row2', 'produits:Annee_Bac', '2013'`
-  
+
+#### insert data with this project into hbase 
+- step 1: build the project jar: `mvn clean compile assembly:single` 
+- step 2: copy the jar from(`target/hbase-testing-1.0-SNAPSHOT-jar-with-dependencies.jar`) into the mapped volume folder `data`
+- step 3: connect into the container shell with `docker exec -it hbase-docker sh` 
+- step 4: run the jar with this command : `java -jar /data/hbase-testing-1.0-SNAPSHOT-jar-with-dependencies.jar`
